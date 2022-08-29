@@ -1,1 +1,2 @@
-Mern Stack Implementation of An Event organizer website.
+#Mern Stack Implementation 
+of An Event organizer website.
