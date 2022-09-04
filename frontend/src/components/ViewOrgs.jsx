@@ -25,8 +25,8 @@ const ViewOrgs = () => {
         <h4 style={{ margin: '10px', marginBottom: '30px' }}>Organizations</h4>
       </div>
 
-      <div className='tickets'>
-        <div className='ticket-headings'>
+      <div className='titles'>
+        <div className='title-headings'>
           <div>Date</div>
           <div>Name</div>
           <div>Active</div>

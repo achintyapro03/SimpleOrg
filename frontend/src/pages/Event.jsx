@@ -9,13 +9,10 @@ import Create from './Create';
 import Join from './Join';
 import { getAllEvents, reset as reset2 } from '../features/event/eventSlice';
 import ViewEvents from '../components/ViewEvents';
-
+import SideNavBar from '../components/SideNavBar';
 const Event = () => {
   const { org } = useSelector((state) => state.org);
-  const { event, isLoading, isSuccess, isError, message } = useSelector(
-    (state) => state.event
-  );
-
+  const { user } = useSelector((state) => state.auth);
   const [modalIsOpen, setmodalIsOpen] = useState(false);
 
   const [opener, setopener] = useState(-1);
@@ -27,27 +24,40 @@ const Event = () => {
     if (isError) {
       toast.error(message);
     }
-
     dispatch(getEvent(eventId));
-    // dispatch(getAllEvents(orgId));
   }, [eventId]);
+
+  var { event, isLoading, isSuccess, isError, message } = useSelector(
+    (state) => state.event
+  );
+  // console.log(event);
+
   return (
     <>
-      <div className='event-box'>
+      {org.admin.toString() === user._id.toString() ? <SideNavBar /> : <></>}
+
+      <div className='event-box' style={{ marginLeft: '60px' }}>
         <div style={{ display: 'flex', justifyContent: 'space-around' }}>
-          <div className='title'>
+          <div className='titlex'>
             <div style={{ fontSize: '20px' }}>Event name: {event.name}</div>
             <div style={{ fontSize: '15px' }}>Event org : {org.name}</div>
           </div>
-          <div className='title'>
+          <div className='titlex'>
             <div style={{ fontSize: '15px' }}>
-              {/* {event.dateStart.slice(0, 10)} */}
+              Start Date: {event.dateStart.slice(0, 10)}
             </div>
-            {/* <div style={{ fontSize: '15px' }}>{event.dateEnd.slice(0, 10)}</div> */}
+            <div style={{ fontSize: '15px' }}>
+              End Date: {event.dateEnd.slice(0, 10)}
+            </div>
           </div>
         </div>
         <div className='content'>
-          <div className='cont-inner'>Event Description : {event.desc}</div>
+          <div className='cont-inner'>
+            <div style={{ textAlign: 'center', marginBottom: '10px' }}>
+              <b> Event Description </b>
+            </div>{' '}
+            {event.desc}
+          </div>
         </div>
       </div>
     </>

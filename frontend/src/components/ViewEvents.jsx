@@ -7,7 +7,7 @@ const ViewEvents = ({ getAllEvents }) => {
   const { events, isLoading, isSuccess } = useSelector((state) => state.event);
 
   const dispatch = useDispatch();
-
+  console.log(events);
   useEffect(() => {
     dispatch(getEvents());
   }, [dispatch]);
@@ -18,8 +18,8 @@ const ViewEvents = ({ getAllEvents }) => {
         <h4 style={{ margin: '10px', marginBottom: '30px' }}>Events</h4>
       </div>
 
-      <div className='tickets'>
-        <div className='ticket-headings'>
+      <div className='titles'>
+        <div className='title-headings'>
           <div>Date</div>
           <div>Name</div>
           <div>Active</div>

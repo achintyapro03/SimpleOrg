@@ -3,7 +3,9 @@ import orgService from './orgService';
 
 const initialState = {
   orgs: [],
-  org: {},
+  org: {
+    admin: '',
+  },
   isError: false,
   isSuccess: false,
   isLoading: false,

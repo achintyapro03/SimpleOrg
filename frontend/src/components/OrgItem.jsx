@@ -5,7 +5,7 @@ const OrgItem = ({ org }) => {
   // console.log(org.events);
   if (org.events[1].length !== 0) status = 'yes';
   return (
-    <div className='ticket'>
+    <div className='title title-container'>
       <div className=''>{new Date(org.createdAt).toLocaleString('en-US')}</div>
       <div>{org.name}</div>
       <div className={`status status-${status}`}>{status}</div>

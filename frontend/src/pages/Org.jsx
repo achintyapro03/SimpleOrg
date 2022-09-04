@@ -28,6 +28,7 @@ const Org = () => {
     if (isError) {
       toast.error(message);
     }
+    // document.location.reload();
 
     dispatch(getOrg(orgId));
     dispatch(getAllEvents(orgId));

@@ -6,7 +6,7 @@ const EventItem = ({ event }) => {
   // var status = 'no';
   const dispatch = useDispatch();
   return (
-    <div className='ticket'>
+    <div className='title'>
       <div className=''>
         {new Date(event.createdAt).toLocaleString('en-US')}
       </div>

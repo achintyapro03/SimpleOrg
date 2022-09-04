@@ -17,7 +17,7 @@ function Card({ org }) {
 
   return cond === 1 ? (
     <>
-      <div className='ticket-2'>
+      <div className='title-2'>
         <div>{o.name}</div>
         <div>{o.email}</div>
 
@@ -48,7 +48,7 @@ function Card({ org }) {
   ) : (
     <>
       {' '}
-      <div className='ticket-2'>
+      <div className='title-2'>
         <div>{o.name}</div>
         <div>{o.email}</div>
 

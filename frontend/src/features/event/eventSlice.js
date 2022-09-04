@@ -3,7 +3,17 @@ import eventService from './eventService';
 
 const initialState = {
   events: [],
-  event: {},
+  event: {
+    _id: '',
+    name: '',
+    users: [],
+    org: '',
+    desc: '',
+    startTime: '',
+    endTime: '',
+    dateStart: '',
+    dateEnd: '',
+  },
   isError: false,
   isSuccess: false,
   isLoading: false,
@@ -186,6 +196,24 @@ export const eventSlice = createSlice({
       });
   },
 });
+
+export const deleteEvent = createAsyncThunk(
+  'event/delete',
+  async (eventId, thunkAPI) => {
+    try {
+      //   console.Console;
+      const token = thunkAPI.getState().auth.user.token;
+      return await eventService.deleteEvent(eventId, token);
+    } catch (err) {
+      const message =
+        (err.response && err.response.data && err.response.data.message) ||
+        err.message ||
+        err.toString();
+
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
 
 export const { reset } = eventSlice.actions;
 export default eventSlice.reducer;

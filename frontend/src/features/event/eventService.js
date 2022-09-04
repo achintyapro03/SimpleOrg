@@ -75,12 +75,29 @@ const joinEvent = async (eventId, orgId, token) => {
   return response.data;
 };
 
+const deleteEvent = async (eventId, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const response = await axios.post(
+    API_URL + 'del_event',
+    { eventId: eventId },
+    config
+  );
+
+  return response.data;
+};
+
 const eventService = {
   createEvent,
   getEvents,
   getAllEvents,
   joinEvent,
   getEvent,
+  deleteEvent,
 };
 
 export default eventService;
