@@ -160,27 +160,14 @@ const getEvent = asyncHandler(async (req, res) => {
   res.status(200).json(event);
 });
 
-const ret2 = async (events) => {
-  let eventRet = [];
-  let li = [];
-  for (x of events) {
-    for (e of x) li.push(await Event.findOne({ _id: x }));
-    eventRet.push(li);
-    li = [];
-  }
-  return eventRet;
-};
-
 const getAllEvents = asyncHandler(async (req, res) => {
-  console.log('yo');
   const { orgId } = req.body;
   console.log(req);
   console.log(req.body);
   const org = await Org.findOne({ _id: orgId.toString() });
-  console.log('hello');
+
   const events = org.events;
-  console.log(events);
-  console.log('jojo');
+
   if (!events) {
     res.status(401);
     throw new Error('NO events found');
@@ -189,10 +176,54 @@ const getAllEvents = asyncHandler(async (req, res) => {
   res.status(200).json(await ret(events[1]));
 });
 
+const del1 = async (users, org, eventId) => {
+  for (x of users) {
+    const user = await User.findOne({ _id: x });
+    var eve = user.events;
+    var index = eve.indexOf(eventId);
+    if (index !== -1) {
+      eve.splice(index, 1);
+    }
+    await User.updateOne({ _id: x }, { $set: { events: eve } });
+  }
+
+  const orgg = await Org.findOne({ _id: org });
+  var eve = orgg.events[1];
+  var index = eve.indexOf(eventId);
+  if (index !== -1) {
+    eve.splice(index, 1);
+  }
+  if (eve == null) eve = [];
+  await Org.updateOne(
+    { _id: org },
+    { $set: { events: [orgg.events[0], eve, orgg.events[2]] } }
+  );
+
+  await Event.deleteOne({ _id: eventId });
+};
+
+const delEvent = asyncHandler(async (req, res) => {
+  console.log('entered del');
+  const { eventId } = req.body;
+  const event = await Event.findOne({ _id: eventId });
+  const users = event.users;
+  const org = event.org;
+
+  try {
+    await del1(users, org, eventId);
+    res.status(200).json('Deleted');
+  } catch (err) {
+    console.log(err);
+    res.status(401);
+    throw new Error('Failed to delete event');
+  }
+});
+
 module.exports = {
   eventCreate,
   joinEvent,
   getEvents,
   getEvent,
   getAllEvents,
+  delEvent,
 };
